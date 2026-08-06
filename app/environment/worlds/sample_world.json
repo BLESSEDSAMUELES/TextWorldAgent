@@ -1,0 +1,470 @@
+{
+  "title": "The Whispering Observatory",
+  "objective": "Find the golden chalice and the silver amulet, then return to the Observatory Gates and use the golden chalice to escape.",
+  "rooms": {
+    "observatory_gates": {
+      "name": "Observatory Gates",
+      "description": "Massive rusted iron gates block the entrance to the Whispering Observatory. The stone walls surrounding the estate are overgrown with dark ivy. A heavy chain with an ancient padlock binds the gates shut.",
+      "exits": {
+        "north": "courtyard"
+      },
+      "objects": {
+        "padlock": {
+          "description": "A heavy ancient padlock. It requires the gate_key to unlock.",
+          "portable": false,
+          "locked": true,
+          "lock_key": "gate_key",
+          "on_unlock": {
+            "add_exit": {
+              "north": "courtyard"
+            },
+            "message": "The padlock clicks open, and the heavy iron gates swing outward with a loud groan!"
+          }
+        },
+        "dark_ivy": {
+          "description": "Thick dark ivy growing over the stone wall. Something metal glints beneath it.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "gate_key",
+            "message": "You part the ivy and find a rusted gate_key hanging on a stone hook!"
+          }
+        }
+      }
+    },
+    "courtyard": {
+      "name": "Courtyard",
+      "description": "A spacious stone courtyard. Crumbling statues of ancient astronomers stand watch. Paths lead west to the carriage house, east to the botanical greenhouse, and north into the grand foyer.",
+      "exits": {
+        "south": "observatory_gates",
+        "west": "carriage_house",
+        "east": "botanical_greenhouse",
+        "north": "grand_foyer"
+      },
+      "objects": {
+        "fountain": {
+          "description": "A dried stone fountain. Dust and withered leaves fill the basin.",
+          "portable": false
+        }
+      }
+    },
+    "carriage_house": {
+      "name": "Carriage House",
+      "description": "A dusty, dark carriage house. An old wooden carriage sits rotting in the center. Tools are scattered across a workbench.",
+      "exits": {
+        "east": "courtyard"
+      },
+      "objects": {
+        "rusty_crowbar": {
+          "description": "A solid iron crowbar. Rusted but highly durable.",
+          "portable": true
+        },
+        "workbench": {
+          "description": "A wooden workbench. You might find something useful if you examine it.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "carriage_log",
+            "message": "Under a pile of old rags, you discover an old carriage_log book!"
+          }
+        }
+      }
+    },
+    "botanical_greenhouse": {
+      "name": "Botanical Greenhouse",
+      "description": "A massive glass greenhouse. Exotic, overgrown vines creep across the glass panes, blocking the sunlight. The air is warm and humid. A path leads north to the faded garden.",
+      "exits": {
+        "west": "courtyard",
+        "north": "faded_garden"
+      },
+      "objects": {
+        "glowing_herb": {
+          "description": "A rare plant with soft blue glowing leaves.",
+          "portable": true
+        }
+      }
+    },
+    "faded_garden": {
+      "name": "Faded Garden",
+      "description": "A labyrinth of overgrown hedges and dried rose bushes. In the center sits an ancient stone well. A narrow path leads north to the conservatory.",
+      "exits": {
+        "south": "botanical_greenhouse",
+        "north": "conservatory"
+      },
+      "objects": {
+        "stone_well": {
+          "description": "An old stone well. A wooden bucket hangs over the dark depths, secured by a sturdy rope.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "old_key",
+            "message": "You reel up the wooden bucket and find a rusted old_key inside!"
+          }
+        }
+      }
+    },
+    "conservatory": {
+      "name": "Conservatory",
+      "description": "A beautiful music room with high arched windows. A grand piano sits in the center. An exit leads west to the grand foyer.",
+      "exits": {
+        "south": "faded_garden",
+        "west": "grand_foyer"
+      },
+      "objects": {
+        "piano": {
+          "description": "A polished mahogany piano. It is slightly out of tune.",
+          "portable": false
+        },
+        "silver_flute": {
+          "description": "A beautifully crafted silver flute that shines in the dim light.",
+          "portable": true
+        }
+      }
+    },
+    "grand_foyer": {
+      "name": "Grand Foyer",
+      "description": "A spectacular entrance hall with a polished marble floor and a sweeping double staircase leading up. Doors lead east to the conservatory, west to the salon, and north to the main gallery.",
+      "exits": {
+        "south": "courtyard",
+        "east": "conservatory",
+        "west": "salon",
+        "north": "main_gallery",
+        "up": "upper_landing"
+      },
+      "objects": {
+        "grand_chandelier": {
+          "description": "A massive crystal chandelier suspended from the high ceiling, catching the faint light.",
+          "portable": false
+        }
+      }
+    },
+    "salon": {
+      "name": "Salon",
+      "description": "A luxurious sitting room filled with velvet chairs, dusty drapes, and antique portraits. A cold fireplace sits in the north wall.",
+      "exits": {
+        "east": "grand_foyer"
+      },
+      "objects": {
+        "obsidian_mirror": {
+          "description": "A large mirror made of dark, polished volcanic glass.",
+          "portable": true
+        }
+      }
+    },
+    "main_gallery": {
+      "name": "Main Gallery",
+      "description": "A long hall lined with detailed murals of constellations and astronomical events. Doors lead west to the library, east to the alchemist_lab, and north to the astronomy_hall.",
+      "exits": {
+        "south": "grand_foyer",
+        "west": "library",
+        "east": "alchemist_lab",
+        "north": "astronomy_hall"
+      },
+      "objects": {
+        "constellation_mural": {
+          "description": "A mural depicting the constellation of Orion. One star seems slightly misaligned.",
+          "portable": false
+        }
+      }
+    },
+    "library": {
+      "name": "Library",
+      "description": "Floor-to-ceiling bookshelves crammed with leather-bound volumes. A massive oak desk sits near a stone fireplace. A heavy rug covers the center floor.",
+      "exits": {
+        "east": "main_gallery"
+      },
+      "objects": {
+        "ancient_manuscript": {
+          "description": "An open manuscript containing clues: 'To access the Reliquary below, light the cold blue hearth in the study. To enter the Crypt, pull the loose book in the library.'",
+          "portable": true
+        },
+        "loose_book": {
+          "description": "A suspicious book jutting out slightly from the shelf. Pulling it might reveal something.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "trapdoor",
+            "message": "You pull the loose book. A clicking sound echoes, and a trapdoor is revealed beneath the heavy rug!"
+          }
+        },
+        "trapdoor": {
+          "description": "A wooden trapdoor leading down into the darkness.",
+          "portable": false,
+          "locked": true,
+          "lock_key": "old_key",
+          "on_unlock": {
+            "add_exit": {
+              "down": "underground_crypt"
+            },
+            "message": "You unlock the trapdoor, revealing stone stairs leading down into the crypt!"
+          }
+        }
+      }
+    },
+    "alchemist_lab": {
+      "name": "Alchemist Lab",
+      "description": "A cluttered laboratory filled with glass retorts, brass scales, and jars of strange ingredients. An alchemist works quietly at a bench.",
+      "exits": {
+        "west": "main_gallery"
+      },
+      "objects": {
+        "brass_scales": {
+          "description": "A set of accurate brass scales used for weighing reagents.",
+          "portable": false
+        }
+      },
+      "npcs": {
+        "alchemist": {
+          "description": "An old man in stained robes, focused on a bubbling beaker.",
+          "dialogue": "Ah, a visitor. If you bring me a glowing_herb from the greenhouse, I will trade you a special alchemist_key.",
+          "state": "idle"
+        }
+      }
+    },
+    "underground_crypt": {
+      "name": "Underground Crypt",
+      "description": "A chilly, damp crypt beneath the library. Stone sarcophagi line the walls. A heavy iron door leads east to the reliquary.",
+      "exits": {
+        "up": "library",
+        "east": "reliquary"
+      },
+      "objects": {
+        "sarcophagus": {
+          "description": "An ancient stone tomb covered in cobwebs.",
+          "portable": false
+        }
+      }
+    },
+    "reliquary": {
+      "name": "Reliquary",
+      "description": "A small stone vault designed to store holy relics. A gilded chest sits in the center.",
+      "exits": {
+        "west": "underground_crypt"
+      },
+      "objects": {
+        "gilded_chest": {
+          "description": "A chest adorned with silver engravings.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "silver_amulet",
+            "message": "You open the gilded chest and find the silver_amulet inside!"
+          }
+        }
+      }
+    },
+    "astronomy_hall": {
+      "name": "Astronomy Hall",
+      "description": "A circular hall with a model of the solar system hanging from the ceiling. Passages lead west to the map_room and north to the massive telescope dome.",
+      "exits": {
+        "south": "main_gallery",
+        "west": "map_room",
+        "north": "telescope_dome"
+      },
+      "objects": {
+        "orrery": {
+          "description": "A mechanical model of the planets. It rotates slowly when wound.",
+          "portable": false
+        }
+      }
+    },
+    "map_room": {
+      "name": "Map Room",
+      "description": "A room filled with star charts, celestial globes, and drafting tables. A cabinet in the corner contains navigating tools.",
+      "exits": {
+        "east": "astronomy_hall"
+      },
+      "objects": {
+        "brass_sextant": {
+          "description": "A heavy brass navigation instrument.",
+          "portable": true
+        }
+      }
+    },
+    "telescope_dome": {
+      "name": "Telescope Dome",
+      "description": "A massive copper dome housing a giant refracting telescope. A staircase leads east to the observatory_balcony. A heavy steel door leads west to the clocktower_base.",
+      "exits": {
+        "south": "astronomy_hall",
+        "east": "observatory_balcony",
+        "west": "clocktower_base"
+      },
+      "objects": {
+        "telescope": {
+          "description": "The great refracting telescope. It points toward the night sky.",
+          "portable": false
+        }
+      }
+    },
+    "observatory_balcony": {
+      "name": "Observatory Balcony",
+      "description": "A wide stone balcony overlooking the misty forest. Cold air blows from the north. A staircase leads down to the high_terrace.",
+      "exits": {
+        "west": "telescope_dome",
+        "down": "high_terrace"
+      },
+      "objects": {
+        "stone_railing": {
+          "description": "A crumbling stone balustrade covering the edge.",
+          "portable": false
+        }
+      }
+    },
+    "high_terrace": {
+      "name": "High Terrace",
+      "description": "An open-air stone terrace connecting the upper structures of the observatory. A doorway leads east into the solar_chamber.",
+      "exits": {
+        "up": "observatory_balcony",
+        "east": "solar_chamber"
+      },
+      "objects": {
+        "sun_dial": {
+          "description": "A marble sundial casting a sharp shadow in the moonlight.",
+          "portable": false
+        }
+      }
+    },
+    "solar_chamber": {
+      "name": "Solar Chamber",
+      "description": "A brightly decorated room symbolizing the sun. Golden ornaments hang from the walls. A heavy brass door leads north to the lunar_vault.",
+      "exits": {
+        "west": "high_terrace",
+        "north": "lunar_vault"
+      },
+      "objects": {
+        "sun_totem": {
+          "description": "A heavy golden statue representing the sun.",
+          "portable": true
+        }
+      }
+    },
+    "lunar_vault": {
+      "name": "Lunar Vault",
+      "description": "A quiet, silver-accented vault. In the center, a pedestal holds a legendary chalice.",
+      "exits": {
+        "south": "solar_chamber"
+      },
+      "objects": {
+        "golden_chalice": {
+          "description": "The legendary golden chalice of the Whispering Observatory. It glows with celestial power.",
+          "portable": true,
+          "is_objective_item": true
+        }
+      }
+    },
+    "clocktower_base": {
+      "name": "Clocktower Base",
+      "description": "The base of a tall stone clocktower. Dust and cobwebs cover the stone stairs leading up. A heavy iron grate blocks access to the stairs.",
+      "exits": {
+        "east": "telescope_dome"
+      },
+      "objects": {
+        "iron_grate": {
+          "description": "A heavy iron grate blocking the stairs. It is locked with a simple padlock.",
+          "portable": false,
+          "locked": true,
+          "lock_key": "rusty_crowbar",
+          "on_unlock": {
+            "add_exit": {
+              "up": "clocktower_loft"
+            },
+            "message": "You wedge the crowbar into the latch and pry the iron grate open with a satisfying crack!"
+          }
+        }
+      }
+    },
+    "clocktower_loft": {
+      "name": "Clocktower Loft",
+      "description": "A dusty loft containing the massive gears of the observatory clock. A window looks out over the estate. A wooden ladder leads up to the bell_deck.",
+      "exits": {
+        "down": "clocktower_base",
+        "up": "bell_deck"
+      },
+      "objects": {
+        "clock_gears": {
+          "description": "The giant bronze gears of the clock. They are currently locked in place.",
+          "portable": false
+        }
+      }
+    },
+    "bell_deck": {
+      "name": "Bell Deck",
+      "description": "The highest point of the clocktower. A massive bronze bell hangs from the oak beams. An old wooden chest sits in the corner.",
+      "exits": {
+        "down": "clocktower_loft"
+      },
+      "objects": {
+        "wooden_chest": {
+          "description": "A plain wooden chest containing spare parts.",
+          "portable": false,
+          "on_examine": {
+            "reveal_object": "brass_cog",
+            "message": "You open the wooden chest and find a heavy brass_cog inside!"
+          }
+        }
+      }
+    },
+    "upper_landing": {
+      "name": "Upper Landing",
+      "description": "A dusty upper hallway at the top of the foyer stairs. Arched doorways lead east to the private study and west to the star_chamber.",
+      "exits": {
+        "down": "grand_foyer",
+        "east": "private_study",
+        "west": "star_chamber"
+      },
+      "objects": {
+        "carved_statue": {
+          "description": "A wooden statue of a celestial muse.",
+          "portable": false
+        }
+      }
+    },
+    "private_study": {
+      "name": "Private Study",
+      "description": "A cozy room with a leather armchair and a crackling blue hearth fireplace. Lord Blackwood's spirit hovers here.",
+      "exits": {
+        "west": "upper_landing"
+      },
+      "objects": {
+        "blue_hearth": {
+          "description": "A cold stone fireplace radiating an eerie blue light.",
+          "portable": false
+        }
+      },
+      "npcs": {
+        "spirit_blackwood": {
+          "description": "The whispering spirit of Lord Blackwood.",
+          "dialogue": "You seek the chalice? It lies beyond the solar chamber in the Lunar Vault. Find the silver amulet in the Reliquary beneath the library to aid your escape.",
+          "state": "idle"
+        }
+      }
+    },
+    "star_chamber": {
+      "name": "Star Chamber",
+      "description": "A chamber with a ceiling painted to resemble the night sky. In the center is a slot where a brass_cog might fit.",
+      "exits": {
+        "east": "upper_landing"
+      },
+      "objects": {
+        "gear_slot": {
+          "description": "A bronze socket designed to hold a large cog.",
+          "portable": false,
+          "locked": true,
+          "lock_key": "brass_cog",
+          "on_unlock": {
+            "reveal_object": "silver_amulet",
+            "message": "You insert the brass cog. The mechanism spins, and a secret compartment pops open, revealing a second silver_amulet!"
+          }
+        }
+      }
+    }
+  },
+  "win_conditions": [
+    {
+      "type": "has_items_at_room",
+      "items": [
+        "golden_chalice",
+        "silver_amulet"
+      ],
+      "room": "observatory_gates",
+      "action": "use golden_chalice",
+      "message": "You hold up the golden chalice and the silver amulet together. A star portal bursts open in front of the Observatory Gates with a flash of brilliant celestial light! You step through the portal and escape. YOU WIN!"
+    }
+  ],
+  "start_room": "observatory_gates"
+}
