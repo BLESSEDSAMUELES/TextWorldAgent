@@ -97,49 +97,49 @@ At every step, the agent:
 
 ```mermaid
 flowchart TB
-    subgraph Environment [" 🎮 Game Environment "]
-        ENV[Custom Text Adventure Engine]
+    subgraph Environment ["Game Environment"]
+        ENV["Custom Text Adventure Engine"]
     end
 
-    subgraph Perception [" 👁️ Perception & Extraction Layer "]
-        EXT[Rule-Based Extractor <br><i>Regex Engine < 1ms</i>]
+    subgraph Perception ["Perception & Extraction Layer"]
+        EXT["Rule-Based Extractor<br>(Regex Engine &lt; 1ms)"]
     end
 
-    subgraph WorldModelLayer [" 🧠 Persistent World Model & Knowledge Base "]
-        REC[State Reconciler & Conflict Resolver]
-        DB[(SQLite Database <br><i>WAL Mode · 8 Normalized Tables</i>)]
-        GRAPH[NetworkX Spatial DiGraph <br><i>Topological Map & Pathfinding</i>)]
+    subgraph WorldModelLayer ["Persistent World Model & Knowledge Base"]
+        REC["State Reconciler & Conflict Resolver"]
+        DB[("SQLite Database<br>(WAL Mode · 8 Normalized Tables)")]
+        GRAPH["NetworkX Spatial DiGraph<br>(Topological Map & Pathfinding)"]
     end
 
-    subgraph QueryLayer [" ✂️ Surgical Context Slicer "]
-        QE[Query Engine <br><i>Relevance Scorer & Token Budget Enforcer</i>]
-        SLICE[Compact World Slice <br><i>~250 Tokens</i>]
+    subgraph QueryLayer ["Surgical Context Slicer"]
+        QE["Query Engine<br>(Relevance Scorer & Token Budget Enforcer)"]
+        SLICE["Compact World Slice<br>(~250 Tokens)"]
     end
 
-    subgraph DecisionLayer [" 🎯 Decision & Action Layer "]
-        LLM[Local LLM Client <br><i>Gemma 2:2B via Ollama</i>]
-        FALLBACK[Graph Heuristic Solver <br><i>Frontier Exploration</i>]
-        AP[4-Tier Action Parser <br><i>Exact · Strip · Fuzzy · Embedded</i>]
-        LOOP[Anti-Loop & Cycle Guard <br><i>Repetition & Oscillation Filter</i>]
+    subgraph DecisionLayer ["Decision & Action Layer"]
+        LLM["Local LLM Client<br>(Gemma 2:2B via Ollama)"]
+        FALLBACK["Graph Heuristic Solver<br>(Frontier Exploration)"]
+        AP["4-Tier Action Parser<br>(Exact · Strip · Fuzzy · Embedded)"]
+        LOOP["Anti-Loop & Cycle Guard<br>(Repetition & Oscillation Filter)"]
     end
 
-    ENV -->|Raw Text Observation| EXT
-    EXT -->|Structured ExtractionResult| REC
-    REC -->|Upsert Entities & Supersede Facts| DB
-    REC -->|Sync Room Nodes & Edges| GRAPH
+    ENV -->|"Raw Text Observation"| EXT
+    EXT -->|"Structured ExtractionResult"| REC
+    REC -->|"Upsert Entities & Supersede Facts"| DB
+    REC -->|"Sync Room Nodes & Edges"| GRAPH
 
-    DB -->|Active Facts, Inventory, Exits| QE
-    GRAPH -->|Shortest Paths & Frontier| QE
-    QE -->|Rendered Slice| SLICE
+    DB -->|"Active Facts, Inventory, Exits"| QE
+    GRAPH -->|"Shortest Paths & Frontier"| QE
+    QE -->|"Rendered Slice"| SLICE
 
-    SLICE -->|Surgical Prompt| LLM
-    LLM -->|Candidate Action| AP
-    FALLBACK -.->|Fallback Action| AP
-    AP -->|Validated Action| LOOP
-    LOOP -->|Loop Detected? Overrule| FALLBACK
-    LOOP -->|Executable Command| ENV
+    SLICE -->|"Surgical Prompt"| LLM
+    LLM -->|"Candidate Action"| AP
+    FALLBACK -.->|"Fallback Action"| AP
+    AP -->|"Validated Action"| LOOP
+    LOOP -->|"Loop Detected? Overrule"| FALLBACK
+    LOOP -->|"Executable Command"| ENV
 
-    ENV -.->|Post-Action Result & State Delta| REC
+    ENV -.->|"Post-Action Result & State Delta"| REC
 ```
 
 ---
