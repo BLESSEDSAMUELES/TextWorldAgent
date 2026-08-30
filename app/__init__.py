@@ -1,1 +1,1 @@
-# Text World Agent - World Model Architecture
+# ENVORA — Environment-aware Reasoning Agent

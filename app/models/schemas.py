@@ -1,5 +1,5 @@
 """
-Domain models for the Text World Agent.
+Domain models for ENVORA (Environment-aware Reasoning Agent).
 
 All domain objects are Pydantic models with strict validation.
 These models are the single source of truth for data shapes across

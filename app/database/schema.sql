@@ -1,5 +1,5 @@
 -- =============================================================================
--- Text World Agent — SQLite Schema
+-- ENVORA (Environment-aware Reasoning Agent) — SQLite Schema
 -- =============================================================================
 -- 8 normalized tables with UPSERT-friendly unique constraints.
 -- Contradicting observations UPDATE existing rows instead of duplicating.

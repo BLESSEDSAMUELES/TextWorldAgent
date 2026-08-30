@@ -1,5 +1,5 @@
 """
-Main CLI entry point for Text World Agent.
+Main CLI entry point for ENVORA (Environment-aware Reasoning Agent).
 
 Runs the agent in a text adventure game environment, displaying step-by-step
 observations, selected actions, world state updates, and game results.
@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 
 from app.agent.action_parser import ActionParser
-from app.agent.agent import TextWorldAgent
+from app.agent.agent import EnvoraAgent, TextWorldAgent
 from app.config import get_config
 from app.database.connection import DatabaseConnection
 from app.environment.custom_env import CustomEnvironment
@@ -48,7 +48,7 @@ def print_step(step: int, obs: str, action: str, reward: float, source: str, roo
 
 def main() -> int:
     """CLI execution entry point."""
-    parser = argparse.ArgumentParser(description="Text World Agent Runner")
+    parser = argparse.ArgumentParser(description="ENVORA: Environment-aware Reasoning Agent Runner")
     parser.add_argument(
         "--world",
         type=Path,
@@ -59,7 +59,7 @@ def main() -> int:
         "--steps",
         type=int,
         default=50,
-        help="Maximum game steps to run (default: 100, use 0 for unlimited)",
+        help="Maximum game steps to run (default: 50, use 0 for unlimited)",
     )
     parser.add_argument(
         "--db",
@@ -86,14 +86,14 @@ def main() -> int:
 
     if HAS_RICH and console is not None:
         console.print(Panel.fit(
-            f"[bold gold1]Text World Agent[/bold gold1]\n"
+            f"[bold gold1]ENVORA[/bold gold1] [dim]- Environment-aware Reasoning Agent[/dim]\n"
             f"World: [cyan]{world_path.name}[/cyan]\n"
             f"Objective: {env.get_objective()}\n"
-            f"Mode: [magenta]AI Agent[/magenta]",
+            f"Mode: [magenta]Autonomous Neuro-Symbolic Agent[/magenta]",
             title="Initialization",
         ))
     else:
-        print("=== Text World Agent ===")
+        print("=== ENVORA: Environment-aware Reasoning Agent ===")
         print(f"World: {world_path.name}")
         print(f"Objective: {env.get_objective()}")
 

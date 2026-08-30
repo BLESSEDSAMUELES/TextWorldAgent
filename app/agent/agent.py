@@ -1,5 +1,5 @@
 """
-Text World Agent — central agent orchestrator.
+ENVORA (Environment-aware Reasoning Agent) — central agent orchestrator.
 
 Coordinates environment interaction, observation extraction, world model updates,
 query engine context construction, LLM generation, action parsing, loop detection,
@@ -463,3 +463,7 @@ class TextWorldAgent:
                 return True
 
         return False
+
+
+# Primary alias for the agent
+EnvoraAgent = TextWorldAgent

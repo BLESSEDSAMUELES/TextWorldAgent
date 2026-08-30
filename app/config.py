@@ -2,7 +2,7 @@
 Application configuration using Pydantic BaseSettings.
 
 All configuration is centralized here — zero hardcoded values in business logic.
-Environment variables override defaults (prefix: TWA_).
+Environment variables override defaults (prefix: ENVORA_).
 """
 
 from pathlib import Path
@@ -14,9 +14,9 @@ except ImportError:
 
 
 class AppConfig(BaseSettings):
-    """Central configuration for the Text World Agent."""
+    """Central configuration for ENVORA (Environment-aware Reasoning Agent)."""
 
-    model_config = {"env_prefix": "TWA_"}
+    model_config = {"env_prefix": "ENVORA_"}
 
     # --- LLM Settings ---
     llm_model: str = "gemma2:2b"

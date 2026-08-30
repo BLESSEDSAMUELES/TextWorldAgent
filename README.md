@@ -1,4 +1,4 @@
-# 🧠 Text World Agent (TWA)
+# 🌌 ENVORA — Environment-aware Reasoning Agent
 
 <div align="center">
 
@@ -11,7 +11,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 
 <p align="center">
-  <strong>Autonomous Neuro-Symbolic Agent for Interactive Text Worlds & Puzzle Environments</strong><br>
+  <strong>Autonomous Neuro-Symbolic Agent for Interactive Text Worlds & Complex Puzzle Environments</strong><br>
   Powered by a <em>Persistent Relational World Model</em>, <em>NetworkX Spatial Reasoning</em>, and <em>Surgical Context Slicing</em>.
 </p>
 
@@ -58,12 +58,12 @@
 
 Traditional LLM game-playing agents suffer from **context window exhaustion**, **hallucinatory drift**, and **crippling token latency** caused by dumping raw conversational history into prompts. As turns increase, memory consumption scales linearly ($O(N)$), conflicting historical observations accumulate silently, and token costs explode.
 
-**Text World Agent (TWA)** solves this fundamental challenge through a **Neuro-Symbolic Architecture**. Rather than relying on conversation transcripts, the agent maintains a **live, queryable relational world model** (SQLite + NetworkX graph).
+**ENVORA** (**ENV**ironment-aware Reas**O**ning **A**gent) solves this fundamental challenge through a **Neuro-Symbolic Architecture**. Rather than relying on conversational transcripts, the agent maintains a **live, queryable relational world model** (SQLite + NetworkX graph).
 
-At every step, the agent:
+At every step, ENVORA:
 1. **Extracts** structured facts from raw text in `<1ms`.
 2. **Reconciles** observations with a normalized relational database.
-3. **Slices** the world model into a ultra-compact **~250 token context** containing only the immediate spatial surroundings, relevant facts, active inventory, and anti-loop failure memories.
+3. **Slices** the world model into an ultra-compact **~250 token context** containing only the immediate spatial surroundings, relevant facts, active inventory, and anti-loop failure memories.
 4. **Decides** the optimal action using either a quantized local LLM (`Gemma 2:2B` via Ollama) or a graph-theoretic heuristic fallback.
 5. **Prevents loops** through sequence tracking and topological cycle detection.
 
@@ -81,9 +81,9 @@ At every step, the agent:
 
 ## ⚖️ Why World Model vs. Conversational Memory?
 
-| Capability | Naive Conversational Agent | Text World Agent (World Model) |
+| Capability | Naive Conversational Agent | ENVORA (Relational World Model) |
 |---|---|---|
-| **Context Length Scaling** | Linear $O(N)$ — eventually overflows context window | **Bounded $O(1)$** — strictly fixed at ~250 tokens |
+| **Context Length Scaling** | Linear $O(N)$ — overflows context window | **Bounded $O(1)$** — strictly fixed at ~250 tokens |
 | **Contradiction Handling** | Stale facts accumulate; LLM hallucinates past states | **Superseding RDF Triples** with active state flags |
 | **Queryability** | Unstructured text dump | **Structured SQL + Semantic Relevance Scoring** |
 | **Spatial Awareness** | Poor (LLM loses track of topological connections) | **NetworkX Directed Graph** with Dijkstra pathfinding |
@@ -204,7 +204,7 @@ flowchart TB
 
 ## 🗄️ Relational Knowledge Base & ER Schema
 
-The agent's memory is grounded in an **8-table normalized SQLite schema** operating in `WAL` (Write-Ahead Logging) mode with strict foreign key integrity:
+ENVORA grounds its memory in an **8-table normalized SQLite schema** operating in `WAL` (Write-Ahead Logging) mode with strict foreign key integrity:
 
 ```
 ┌─────────────────────────┐           ┌─────────────────────────┐           ┌─────────────────────────┐
@@ -338,7 +338,7 @@ TextWorldAgent/
 │   │   └── query_engine.py           # Surgical WorldSlice builder with token budgets
 │   │
 │   ├── agent/                        # Cognitive agent layer
-│   │   ├── agent.py                  # TextWorldAgent orchestrator & heuristic solver
+│   │   ├── agent.py                  # EnvoraAgent orchestrator & heuristic solver
 │   │   └── action_parser.py          # 4-tier fuzzy action matcher & sanitizer
 │   │
 │   ├── llm/                          # Local language model client
@@ -405,20 +405,20 @@ To run the agent with local LLM intelligence:
    ```
 
 > [!NOTE]
-> If Ollama is not installed or the model is not pulled, the agent will **automatically and gracefully fall back** to its built-in Graph Heuristic Solver without crashing!
+> If Ollama is not installed or the model is not pulled, ENVORA will **automatically and gracefully fall back** to its built-in Graph Heuristic Solver without crashing!
 
 ---
 
 ## 🎮 How to Run the Agent
 
 ### 1. Standard AI Mode with Local LLM
-Runs the agent against the default 8-room puzzle world ("The Enchanted Manor"):
+Runs ENVORA against the default 8-room puzzle world ("The Enchanted Manor"):
 ```bash
 python main.py
 ```
 
 ### 2. Zero-LLM / Offline Heuristic Mode
-You can test the agent's graph pathfinding and deterministic reasoning directly without running Ollama:
+You can test ENVORA's graph pathfinding and deterministic reasoning directly without running Ollama:
 ```bash
 python main.py --steps 50
 ```
@@ -426,12 +426,12 @@ python main.py --steps 50
 ### 3. Persistent Session with SQLite Storage
 By default, the agent runs in memory (`:memory:`). To inspect or persist the state to an on-disk SQLite database file:
 ```bash
-python main.py --db my_adventure_run.db
+python main.py --db envora_run.db
 ```
-You can inspect `my_adventure_run.db` using any SQLite browser or the `sqlite3` CLI:
+You can inspect `envora_run.db` using any SQLite browser or the `sqlite3` CLI:
 ```bash
-sqlite3 my_adventure_run.db "SELECT * FROM rooms;"
-sqlite3 my_adventure_run.db "SELECT subject, predicate, object FROM observed_facts WHERE active=1;"
+sqlite3 envora_run.db "SELECT * FROM rooms;"
+sqlite3 envora_run.db "SELECT subject, predicate, object FROM observed_facts WHERE active=1;"
 ```
 
 ### 4. Custom Step Limits & Worlds
@@ -453,19 +453,19 @@ python main.py --world app/environment/worlds/sample_world.json --steps 100 --db
 
 ### Environment Variables
 
-All configuration parameters can be overridden using environment variables prefixed with `TWA_`:
+All configuration parameters can be overridden using environment variables prefixed with `ENVORA_`:
 
 | Environment Variable | Default | Description |
 |---|---|---|
-| `TWA_LLM_MODEL` | `gemma2:2b` | Ollama model tag to invoke |
-| `TWA_LLM_TEMPERATURE` | `0.2` | Sampling temperature for LLM generation |
-| `TWA_LLM_MAX_TOKENS` | `30` | Maximum tokens per action response |
-| `TWA_OLLAMA_HOST` | `http://localhost:11434` | Endpoint URL for the Ollama server |
-| `TWA_WORLD_SLICE_MAX_TOKENS` | `250` | Maximum token ceiling for prompt world slices |
-| `TWA_MAX_ACTIVE_FACTS` | `50` | Maximum active facts retained before LRU pruning |
-| `TWA_MAX_ACTIVE_MEMORIES` | `20` | Maximum active strategic memory records |
-| `TWA_MEMORY_RELEVANCE_DECAY` | `0.95` | Multiplicative decay per step for episodic memory |
-| `TWA_LOOP_DETECTION_THRESHOLD`| `2` | Number of repeated actions triggering anti-loop guard |
+| `ENVORA_LLM_MODEL` | `gemma2:2b` | Ollama model tag to invoke |
+| `ENVORA_LLM_TEMPERATURE` | `0.2` | Sampling temperature for LLM generation |
+| `ENVORA_LLM_MAX_TOKENS` | `30` | Maximum tokens per action response |
+| `ENVORA_OLLAMA_HOST` | `http://localhost:11434` | Endpoint URL for the Ollama server |
+| `ENVORA_WORLD_SLICE_MAX_TOKENS` | `250` | Maximum token ceiling for prompt world slices |
+| `ENVORA_MAX_ACTIVE_FACTS` | `50` | Maximum active facts retained before LRU pruning |
+| `ENVORA_MAX_ACTIVE_MEMORIES` | `20` | Maximum active strategic memory records |
+| `ENVORA_MEMORY_RELEVANCE_DECAY` | `0.95` | Multiplicative decay per step for episodic memory |
+| `ENVORA_LOOP_DETECTION_THRESHOLD`| `2` | Number of repeated actions triggering anti-loop guard |
 
 ---
 
@@ -567,7 +567,7 @@ python main.py --world path/to/my_world.json
 
 ## 🧪 Testing & Quality Assurance
 
-Text World Agent features a comprehensive test suite covering unit, integration, and anti-loop scenarios.
+ENVORA features a comprehensive test suite covering unit, integration, and anti-loop scenarios.
 
 ```bash
 # Run all tests with verbose output
@@ -592,7 +592,7 @@ The codebase is engineered strictly around industry-standard software design pat
 - **Open/Closed Principle (OCP)**: The `GameEnvironment` protocol allows adding new text adventure backends (e.g. TextWorld, Jericho, Z-Machine) without altering agent logic.
 - **Liskov Substitution Principle (LSP)**: Any environment implementing `GameEnvironment` is interchangeable.
 - **Interface Segregation Principle (ISP)**: Protocols are kept lean and focused rather than monolithic.
-- **Dependency Inversion Principle (DIP)**: High-level modules (`TextWorldAgent`) depend on abstractions (`GameEnvironment`, repository protocols) rather than direct database drivers.
+- **Dependency Inversion Principle (DIP)**: High-level modules (`EnvoraAgent`) depend on abstractions (`GameEnvironment`, repository protocols) rather than direct database drivers.
 
 ---
 
